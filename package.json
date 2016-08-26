@@ -1,0 +1,52 @@
+{
+  "name": "react_mobx",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "hjs-dev-server",
+    "build": "webpack",
+    "deploy": "npm run build && surge -p public -d somedomain.com",
+    "test": "standard",
+    "yolo": "git add --all && git commit -am \"$(date)\" && git push origin master"
+  },
+  "standard": {
+    "ignore": [
+      "public/*"
+    ]
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ampersand-app": "^2.0.0",
+    "ampersand-model": "^8.0.0",
+    "ampersand-react-mixin": "^1.0.1",
+    "ampersand-rest-collection": "^6.0.0",
+    "ampersand-router": "^4.0.0",
+    "hjs-webpack": "^8.3.0",
+    "local-links": "^1.4.0",
+    "octicons": "^4.3.0",
+    "qs": "^6.2.1",
+    "react": "^15.3.1",
+    "xhr": "^2.2.2"
+  },
+  "devDependencies": {
+    "autoprefixer": "^6.4.0",
+    "babel": "^6.5.2",
+    "babel-core": "^6.13.2",
+    "babel-loader": "^6.2.5",
+    "babel-preset-es2015": "^6.13.2",
+    "babel-preset-react": "^6.11.1",
+    "babel-preset-react-hmre": "^1.1.1",
+    "css-loader": "^0.23.1",
+    "file-loader": "^0.9.0",
+    "json-loader": "^0.5.4",
+    "postcss-loader": "^0.10.1",
+    "react-dom": "^15.3.1",
+    "standard": "^8.0.0-beta.5",
+    "style-loader": "^0.13.1",
+    "stylus-loader": "^2.3.1",
+    "url-loader": "^0.5.7",
+    "yeticss": "^7.3.0"
+  }
+}
