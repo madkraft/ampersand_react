@@ -1,6 +1,11 @@
 import Model from 'ampersand-model'
+import xhr from 'xhr'
+import app from 'ampersand-app'
+import githubMixin from '../helpers/github-mixin'
 
-export default Model.extend({
+export default Model.extend(githubMixin, {
+
+  idAttribute: 'name',
 
   props: {
     name: 'string',
@@ -11,7 +16,37 @@ export default Model.extend({
     editing: {
       type: 'boolean',
       default: false
+    },
+    saved: {
+      type: 'boolean',
+      default: true
     }
+  },
+
+  isNew () {
+    return !this.saved
+  },
+
+  update (attributes) {
+    const oldAttributes = this.getAttributes({
+      props: true,
+      session: false
+    })
+
+    xhr({
+      url: this.url(),
+      json: attributes,
+      method: 'PATCH',
+      headers: {
+        Authorization: 'token ' + app.me.token
+      }
+    }, (err, req, body) => {
+      if (err) {
+        this.set(oldAttributes)
+        console.error('Something went wrong')
+      }
+    })
+    this.set(attributes)
   }
 
 })
