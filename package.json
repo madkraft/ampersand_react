@@ -6,7 +6,7 @@
   "scripts": {
     "start": "hjs-dev-server",
     "build": "webpack",
-    "deploy": "npm run build && surge -p public -d somedomain.com",
+    "deploy": "npm run build && surge -p public -d antonkostiuchkov.surge.sh",
     "test": "standard",
     "yolo": "git add --all && git commit -am \"$(date)\" && git push origin master"
   },

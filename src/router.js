@@ -8,8 +8,18 @@ import Layout from './layout'
 import ReposPage from './pages/repos'
 import RepoDetail from './pages/repo-detail'
 import PublicPage from './pages/public'
+import MessagePage from './pages/message'
+import config from './config'
 
-const root = document.getElementById('root')
+function requiresAuth (handlerName) {
+  return function () {
+    if (app.me.token) {
+      this[handlerName].apply(this, arguments)
+    } else {
+      this.redirectTo('/')
+    }
+  }
+}
 
 export default Router.extend({
   renderPage (page, opts = {layout: true}) {
@@ -26,11 +36,12 @@ export default Router.extend({
 
   routes: {
     '': 'public',
-    'repos': 'repos',
+    'repos': requiresAuth('repos'),
     'login': 'login',
     'logout': 'logout',
-    'repo/:owner/:name': 'repoDetail',
-    'auth/callback?:query': 'authCallback'
+    'repo/:owner/:name': requiresAuth('repoDetail'),
+    'auth/callback?:query': 'authCallback',
+    '*fourOhFour': 'fourOhFour'
   },
 
   public () {
@@ -48,7 +59,7 @@ export default Router.extend({
 
   login () {
     window.location = 'https://github.com/login/oauth/authorize?' + qs.stringify({
-      client_id: '13ce25598a0e19261ce5',
+      client_id: config.clientId,
       redirect_uri: window.location.origin + '/auth/callback',
       scope: 'user,repo'
     })
@@ -58,16 +69,22 @@ export default Router.extend({
     query = qs.parse(query)
 
     xhr({
-      url: 'https://hubtags-learn.herokuapp.com/authenticate/' + query.code,
+      url: config.authUrl + '/' + query.code,
       json: true
     }, (err, req, body) => {
       app.me.token = body.token
       this.redirectTo('/repos')
     })
+
+    this.renderPage(<MessagePage title='Fetching your data...' />)
   },
 
   logout () {
     window.localStorage.clear()
     window.location = '/'
+  },
+
+  fourOhFour () {
+    this.renderPage(<MessagePage title='Not Found' body="Nothing's here" />)
   }
 })
