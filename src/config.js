@@ -4,10 +4,10 @@ const config = {
     clientId: '13ce25598a0e19261ce5'
   },
 
-  'project.surge.sh': {
+  'antonkostiuchkov.surge.sh': {
     authUrl: '',
     clientId: ''
   }
-}[location.hostname]
+}[window.location.hostname]
 
 export default config

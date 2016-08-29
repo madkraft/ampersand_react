@@ -31,7 +31,7 @@ export default Router.extend({
       )
     }
 
-    render(page, root)
+    render(page, document.body)
   },
 
   routes: {

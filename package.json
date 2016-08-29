@@ -1,11 +1,11 @@
 {
-  "name": "react_mobx",
+  "name": "hubtags_learn",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "hjs-dev-server",
-    "build": "webpack",
+    "build": "rm -r public && NODE_ENV=production webpack",
     "deploy": "npm run build && surge -p public -d antonkostiuchkov.surge.sh",
     "test": "standard",
     "yolo": "git add --all && git commit -am \"$(date)\" && git push origin master"
